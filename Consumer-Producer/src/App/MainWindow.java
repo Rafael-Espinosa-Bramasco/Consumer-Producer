@@ -90,8 +90,18 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void StartSimulationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StartSimulationButtonActionPerformed
         StatusGUI status = new StatusGUI();
+        AnimationGUI anim = new AnimationGUI();
+        ConsumerThread ct = new ConsumerThread(status);
+        ProducerThread pt = new ProducerThread(status);
+        
+        status.setAnimRef(anim);
+        status.setThreads(ct, pt);
         
         status.setVisible(true);
+        anim.setVisible(true);
+        
+        pt.start();
+        ct.start();
         
         this.dispose();
     }//GEN-LAST:event_StartSimulationButtonActionPerformed

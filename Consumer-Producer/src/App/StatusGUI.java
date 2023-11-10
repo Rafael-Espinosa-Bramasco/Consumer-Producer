@@ -4,6 +4,9 @@
  */
 package App;
 
+import java.util.ArrayList;
+import java.util.Date;
+
 /**
  *
  * @author rafael
@@ -15,7 +18,92 @@ public class StatusGUI extends javax.swing.JFrame {
      */
     public StatusGUI() {
         initComponents();
+        
+        addSystemMessage("Free (No people using the container)");
+        
+        this.container = new ArrayList<>();
+        this.status = 0;
     }
+    
+    // Variables
+        // Container Array List
+        ArrayList<Character> container;
+        
+        AnimationGUI animREF;
+        ConsumerThread consumer;
+        ProducerThread producer;
+        
+        /* 
+        * 0 -> Container is Free
+        * 1 -> Container is on Use
+        */
+        int status;
+    
+    // Functions
+        public boolean isConsumerAvalible(){
+            return status == 0 && (container.size() >= 3);
+        }
+        
+        public void setConsumerStatus(int c){
+            switch(c){
+                case 0 -> {
+                    addConsumerMessage("Sleeping...");
+                }
+                case 1 -> {
+                    addConsumerMessage("Waiting");
+                }
+                case 2 -> {
+                    status = 1;
+                    addConsumerMessage("Working");
+                    addSystemMessage("Busy (Consumer is working)");
+                }
+            }
+        }
+        
+        public boolean isProducerAvalible(){
+            return status == 0 && (container.size() <= 32);
+        }
+        
+        public void setAnimRef(AnimationGUI ag){
+            this.animREF = ag;
+        }
+        
+        public void setThreads(ConsumerThread c, ProducerThread p){
+            this.consumer = c;
+            this.producer = p;
+        }
+        
+        private void addSystemMessage(String s){
+            Date d = new Date();
+            
+            s = d.toString().concat(" ").concat(s).concat("\n");
+            
+            this.SystemStatus.setText(this.SystemStatus.getText().concat(s));
+        }
+        
+        private void addConsumerMessage(String s){
+            Date d = new Date();
+            
+            s = d.toString().concat(" ").concat(s).concat("\n");
+            
+            this.ConsumerStatus.setText(this.ConsumerStatus.getText().concat(s));
+        }
+        
+        private void addProducerMessage(String s){
+            Date d = new Date();
+            
+            s = d.toString().concat(" ").concat(s).concat("\n");
+            
+            this.ProducerStatus.setText(this.ProducerStatus.getText().concat(s));
+        }
+        
+        private void addContainerMessage(String s){
+            Date d = new Date();
+            
+            s = d.toString().concat(" ").concat(s).concat("\n");
+            
+            this.ContainerStatus.setText(this.ContainerStatus.getText().concat(s));
+        }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -113,21 +201,17 @@ public class StatusGUI extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(ContainerLabel)
                             .addComponent(SystemLabel))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(22, 22, 22)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane5)
-                            .addComponent(jScrollPane4)))
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 557, Short.MAX_VALUE)
+                            .addComponent(jScrollPane5)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(ProducerLabel)
-                                .addGap(18, 18, 18))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(ConsumerLabel)
-                                .addGap(9, 9, 9)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 346, Short.MAX_VALUE)
+                            .addComponent(ConsumerLabel)
+                            .addComponent(ProducerLabel))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane3)
                             .addComponent(jScrollPane2))))
                 .addGap(9, 9, 9))
         );
@@ -164,6 +248,18 @@ public class StatusGUI extends javax.swing.JFrame {
 
     private void formKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyReleased
         if(evt.getKeyCode() == java.awt.event.KeyEvent.VK_ESCAPE){
+            if(consumer.isAlive()){
+                consumer.stop();
+            }
+            
+            if(producer.isAlive()){
+                producer.stop();
+            }
+            
+            if(animREF.isEnabled()){
+                animREF.dispose();
+            }
+            
             this.dispose();
         }
     }//GEN-LAST:event_formKeyReleased
