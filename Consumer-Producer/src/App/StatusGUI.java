@@ -44,6 +44,11 @@ public class StatusGUI extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Status");
         setResizable(false);
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                formKeyReleased(evt);
+            }
+        });
 
         ContainerTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -52,38 +57,47 @@ public class StatusGUI extends javax.swing.JFrame {
                 "#", "Item"
             }
         ));
+        ContainerTable.setFocusable(false);
         jScrollPane1.setViewportView(ContainerTable);
 
         ConsumerLabel.setFont(new java.awt.Font("Roboto Black", 1, 18)); // NOI18N
         ConsumerLabel.setText("Consumer Status");
+        ConsumerLabel.setFocusable(false);
 
         ProducerLabel.setFont(new java.awt.Font("Roboto Black", 1, 18)); // NOI18N
         ProducerLabel.setText("Producer Status");
+        ProducerLabel.setFocusable(false);
 
         SystemLabel.setFont(new java.awt.Font("Roboto Black", 1, 18)); // NOI18N
         SystemLabel.setText("System Status");
+        SystemLabel.setFocusable(false);
 
         ContainerLabel.setFont(new java.awt.Font("Roboto Black", 1, 18)); // NOI18N
         ContainerLabel.setText("Container Status");
+        ContainerLabel.setFocusable(false);
 
         ProducerStatus.setEditable(false);
         ProducerStatus.setColumns(20);
         ProducerStatus.setRows(5);
+        ProducerStatus.setFocusable(false);
         jScrollPane2.setViewportView(ProducerStatus);
 
         ConsumerStatus.setEditable(false);
         ConsumerStatus.setColumns(20);
         ConsumerStatus.setRows(5);
+        ConsumerStatus.setFocusable(false);
         jScrollPane3.setViewportView(ConsumerStatus);
 
         ContainerStatus.setEditable(false);
         ContainerStatus.setColumns(20);
         ContainerStatus.setRows(5);
+        ContainerStatus.setFocusable(false);
         jScrollPane4.setViewportView(ContainerStatus);
 
         SystemStatus.setEditable(false);
         SystemStatus.setColumns(20);
         SystemStatus.setRows(5);
+        SystemStatus.setFocusable(false);
         jScrollPane5.setViewportView(SystemStatus);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -147,6 +161,12 @@ public class StatusGUI extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyReleased
+        if(evt.getKeyCode() == java.awt.event.KeyEvent.VK_ESCAPE){
+            this.dispose();
+        }
+    }//GEN-LAST:event_formKeyReleased
 
     /**
      * @param args the command line arguments

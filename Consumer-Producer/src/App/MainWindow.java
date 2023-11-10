@@ -40,6 +40,11 @@ public class MainWindow extends javax.swing.JFrame {
 
         StartSimulationButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         StartSimulationButton.setText("Start Simulation");
+        StartSimulationButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                StartSimulationButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout ButtonPanelLayout = new javax.swing.GroupLayout(ButtonPanel);
         ButtonPanel.setLayout(ButtonPanelLayout);
@@ -82,6 +87,14 @@ public class MainWindow extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void StartSimulationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StartSimulationButtonActionPerformed
+        StatusGUI status = new StatusGUI();
+        
+        status.setVisible(true);
+        
+        this.dispose();
+    }//GEN-LAST:event_StartSimulationButtonActionPerformed
 
     /**
      * @param args the command line arguments
