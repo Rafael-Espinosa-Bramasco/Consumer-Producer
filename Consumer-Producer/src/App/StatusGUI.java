@@ -6,6 +6,7 @@ package App;
 
 import java.util.ArrayList;
 import java.util.Date;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -19,13 +20,25 @@ public class StatusGUI extends javax.swing.JFrame {
     public StatusGUI() {
         initComponents();
         
-        addSystemMessage("Free (No people using the container)");
+        this.addSystemMessage("Free (No people using the container)");
         
         this.container = new ArrayList<>();
+        
+        for(int i = 0 ; i < 35 ; i++){
+            this.container.add('*');
+        }
+        
+        ContainerTableModel = (DefaultTableModel) this.ContainerTable.getModel();
+        
+        this.initContainerTable();
+        
         this.status = 0;
+        this.containerSize = 0;
     }
     
     // Variables
+        DefaultTableModel ContainerTableModel;
+    
         // Container Array List
         ArrayList<Character> container;
         
@@ -38,10 +51,33 @@ public class StatusGUI extends javax.swing.JFrame {
         * 1 -> Container is on Use
         */
         int status;
+        int containerSize;
     
     // Functions
+        public ArrayList<Character> getContainerList(){
+            return this.container;
+        }
+        
+        public int getContinerSize(){
+            return this.containerSize;
+        }
+        
+        public void setContinerSize(int x){
+            this.containerSize = x;
+        }
+        
+        public void setStatus(int x){
+            this.status = x;
+        }
+        
+        private void initContainerTable(){
+            for(int i = 1 ; i <= 35 ; i++){
+                ContainerTableModel.addRow(new Object[]{i,'*'});
+            }
+        }
+        
         public boolean isConsumerAvalible(){
-            return status == 0 && (container.size() >= 3);
+            return status == 0 && (containerSize >= 3);
         }
         
         public void setConsumerStatus(int c){
@@ -60,8 +96,31 @@ public class StatusGUI extends javax.swing.JFrame {
             }
         }
         
+        public void modCont(int i, char c){
+            this.container.set(i, c);
+            
+            this.ContainerTableModel.setValueAt(i + 1, i, 0);
+            this.ContainerTableModel.setValueAt(c, i, 1);
+        }
+        
         public boolean isProducerAvalible(){
-            return status == 0 && (container.size() <= 32);
+            return status == 0 && (containerSize <= 32);
+        }
+        
+        public void setProducerStatus(int c){
+            switch(c){
+                case 0 -> {
+                    addProducerMessage("Sleeping...");
+                }
+                case 1 -> {
+                    addProducerMessage("Waiting");
+                }
+                case 2 -> {
+                    status = 1;
+                    addProducerMessage("Working");
+                    addSystemMessage("Busy (Consumer is working)");
+                }
+            }
         }
         
         public void setAnimRef(AnimationGUI ag){
@@ -73,7 +132,7 @@ public class StatusGUI extends javax.swing.JFrame {
             this.producer = p;
         }
         
-        private void addSystemMessage(String s){
+        public void addSystemMessage(String s){
             Date d = new Date();
             
             s = d.toString().concat(" ").concat(s).concat("\n");
@@ -81,7 +140,7 @@ public class StatusGUI extends javax.swing.JFrame {
             this.SystemStatus.setText(this.SystemStatus.getText().concat(s));
         }
         
-        private void addConsumerMessage(String s){
+        public void addConsumerMessage(String s){
             Date d = new Date();
             
             s = d.toString().concat(" ").concat(s).concat("\n");
@@ -89,7 +148,7 @@ public class StatusGUI extends javax.swing.JFrame {
             this.ConsumerStatus.setText(this.ConsumerStatus.getText().concat(s));
         }
         
-        private void addProducerMessage(String s){
+        public void addProducerMessage(String s){
             Date d = new Date();
             
             s = d.toString().concat(" ").concat(s).concat("\n");
@@ -97,7 +156,7 @@ public class StatusGUI extends javax.swing.JFrame {
             this.ProducerStatus.setText(this.ProducerStatus.getText().concat(s));
         }
         
-        private void addContainerMessage(String s){
+        public void addContainerMessage(String s){
             Date d = new Date();
             
             s = d.toString().concat(" ").concat(s).concat("\n");
@@ -146,6 +205,7 @@ public class StatusGUI extends javax.swing.JFrame {
             }
         ));
         ContainerTable.setFocusable(false);
+        ContainerTable.setShowGrid(true);
         jScrollPane1.setViewportView(ContainerTable);
 
         ConsumerLabel.setFont(new java.awt.Font("Roboto Black", 1, 18)); // NOI18N

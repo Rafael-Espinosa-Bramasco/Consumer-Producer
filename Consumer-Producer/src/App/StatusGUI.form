@@ -110,6 +110,7 @@
               <Connection code="new javax.swing.table.DefaultTableModel(&#xa;    new Object [][] {&#xa;    },&#xa;    new String [] {&#xa;        &quot;#&quot;, &quot;Item&quot;&#xa;    }&#xa;)" type="code"/>
             </Property>
             <Property name="focusable" type="boolean" value="false"/>
+            <Property name="showGrid" type="boolean" value="true"/>
           </Properties>
         </Component>
       </SubComponents>
