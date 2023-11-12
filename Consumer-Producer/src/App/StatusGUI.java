@@ -114,13 +114,16 @@ public class StatusGUI extends javax.swing.JFrame {
             switch(c){
                 case 0 -> {
                     addProducerMessage("Sleeping...");
+                    animREF.SleepProducer();
                 }
                 case 1 -> {
                     addProducerMessage("Waiting");
+                    animREF.WaitProducer();
                 }
                 case 2 -> {
                     status = 1;
                     addProducerMessage("Working");
+                    animREF.WakeProducer();
                     addSystemMessage("Busy (Consumer is working)");
                 }
             }
