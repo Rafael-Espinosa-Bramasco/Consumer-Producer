@@ -104,13 +104,11 @@ public class AnimationGUI extends javax.swing.JFrame {
         }
     }
     
-    public void WakeConsumer(){
+    public void WakeConsumer(int elements){
         Icon consumidor = new ImageIcon(new ImageIcon(getClass().getResource("/images/consumidor_comer.png")).getImage()
         .getScaledInstance(consumidor_label.getWidth(), consumidor_label.getHeight(), 0));
         
         consumidor_label.setIcon(consumidor);
-        
-        int elements = 4;
         
         for(int i = 0; i<elements;i++)
         {
@@ -330,13 +328,11 @@ public class AnimationGUI extends javax.swing.JFrame {
         }
     }
     
-    public void WakeProducer(){
+    public void WakeProducer(int elements){
         Icon productor = new ImageIcon(new ImageIcon(getClass().getResource("/images/productor.png")).getImage()
         .getScaledInstance(productor_label.getWidth(), productor_label.getHeight(), 0));
         
         productor_label.setIcon(productor);
-        
-        int elements = 4;
         
         for(int i = 0; i<elements;i++)
         {

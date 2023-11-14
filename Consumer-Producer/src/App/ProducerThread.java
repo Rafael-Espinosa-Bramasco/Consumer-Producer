@@ -62,6 +62,12 @@ public class ProducerThread extends Thread{
                 }
                 
                 statusREF.addContainerMessage(String.valueOf(actualChanges).concat(" elements produced!"));
+                statusREF.showanimationProducer(actualChanges);
+                try {
+                    Thread.sleep(250*actualChanges);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(ConsumerThread.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 statusREF.setStatus(0);
                 
                 try {

@@ -62,6 +62,12 @@ public class ConsumerThread extends Thread{
                 }
                 
                 statusREF.addContainerMessage(String.valueOf(actualChanges).concat(" elements consumed!"));
+                statusREF.showanimationConsumer(actualChanges);
+                try {
+                    Thread.sleep(250*actualChanges);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(ConsumerThread.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 statusREF.setStatus(0);
                 
                 try {

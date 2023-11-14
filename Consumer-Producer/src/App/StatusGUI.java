@@ -93,7 +93,7 @@ public class StatusGUI extends javax.swing.JFrame {
                 case 2 -> {
                     status = 1;
                     addConsumerMessage("Working");
-                    animREF.WakeConsumer();
+                    //animREF.WakeConsumer();
                     addSystemMessage("Busy (Consumer is working)");
                 }
             }
@@ -123,7 +123,7 @@ public class StatusGUI extends javax.swing.JFrame {
                 case 2 -> {
                     status = 1;
                     addProducerMessage("Working");
-                    animREF.WakeProducer();
+                    //animREF.WakeProducer();
                     addSystemMessage("Busy (Consumer is working)");
                 }
             }
@@ -168,6 +168,14 @@ public class StatusGUI extends javax.swing.JFrame {
             s = d.toString().concat(" ").concat(s).concat("\n");
             
             this.ContainerStatus.setText(this.ContainerStatus.getText().concat(s));
+        }
+        
+        public void showanimationConsumer(int n){
+            animREF.WakeConsumer(n);
+        }
+        
+        public void showanimationProducer(int n){
+            animREF.WakeProducer(n);
         }
 
     /**
